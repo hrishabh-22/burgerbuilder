@@ -17,8 +17,6 @@ const Burger = (props) => {
     totIngredents = <p>Please Add Some Ingredents</p>;
   }
 
-  console.log(totIngredents);
-
   return (
     <div className={classes.Burger}>
       <BurgerIngredent type="bread-top" />

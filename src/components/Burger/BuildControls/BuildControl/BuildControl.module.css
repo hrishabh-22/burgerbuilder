@@ -50,10 +50,12 @@
 .BuildControl .Less:active {
   background-color: #daa972;
   color: white;
+  cursor: pointer;
 }
 
 .BuildControl .More:hover,
 .BuildControl .More:active {
   background-color: #99703f;
   color: white;
+  cursor: pointer;
 }

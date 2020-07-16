@@ -21,8 +21,20 @@ class BurgerBuilder extends React.Component {
         meat: 0,
       },
       totPrice: 4,
+      purchaseable: false,
     };
   }
+
+  updatePurchaseStateHandler = (ingredents) => {
+    const sum = Object.keys(ingredents)
+      .map((igKey) => {
+        return ingredents[igKey];
+      })
+      .reduce((sum, el) => {
+        return sum + el;
+      }, 0);
+    this.setState({ purchaseable: sum > 0 });
+  };
 
   addIngredentHandler = (type) => {
     const oldCount = this.state.ingredent[type];
@@ -36,6 +48,7 @@ class BurgerBuilder extends React.Component {
     const oldPrice = this.state.totPrice;
     const newPrice = oldPrice + priceAddition;
     this.setState({ ingredent: updatedIngredents, totPrice: newPrice });
+    this.updatePurchaseStateHandler(updatedIngredents);
   };
 
   removeIngredentHandler = (type) => {
@@ -53,6 +66,7 @@ class BurgerBuilder extends React.Component {
     const oldPrice = this.state.totPrice;
     const newPrice = oldPrice - priceDeduction;
     this.setState({ ingredent: updatedIngredents, totPrice: newPrice });
+    this.updatePurchaseStateHandler(updatedIngredents);
   };
 
   render() {
@@ -72,6 +86,7 @@ class BurgerBuilder extends React.Component {
           ingredentRemove={this.removeIngredentHandler}
           disabled={disabledInfo}
           price={this.state.totPrice}
+          purchaseable={this.state.purchaseable}
         />
       </Aux>
     );
