@@ -58,6 +58,10 @@ class BurgerBuilder extends React.Component {
     this.setState({ purchasing: true });
   };
 
+  purchaseCancelHandler = () => {
+    this.setState({ purchasing: false });
+  };
+
   removeIngredentHandler = (type) => {
     const oldCount = this.state.ingredent[type];
     if (oldCount <= 0) {
@@ -85,7 +89,10 @@ class BurgerBuilder extends React.Component {
     }
     return (
       <Aux>
-        <Modal show={this.state.purchasing}>
+        <Modal
+          show={this.state.purchasing}
+          modalClosed={this.purchaseCancelHandler}
+        >
           <OrderSummary ingredients={this.state.ingredent} />
         </Modal>
         <Burger ingredents={this.state.ingredent} />
