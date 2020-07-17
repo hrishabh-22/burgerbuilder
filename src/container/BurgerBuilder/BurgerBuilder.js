@@ -2,6 +2,8 @@ import React from "react";
 import Aux from "../../hoc/Auxilary";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
+import Modal from "../../components/UI/Modal/Modal";
+import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 
 const INGREDENT_PRICES = {
   salad: 0.5,
@@ -22,6 +24,7 @@ class BurgerBuilder extends React.Component {
       },
       totPrice: 4,
       purchaseable: false,
+      purchasing: false,
     };
   }
 
@@ -51,6 +54,10 @@ class BurgerBuilder extends React.Component {
     this.updatePurchaseStateHandler(updatedIngredents);
   };
 
+  purchaseHandler = () => {
+    this.setState({ purchasing: true });
+  };
+
   removeIngredentHandler = (type) => {
     const oldCount = this.state.ingredent[type];
     if (oldCount <= 0) {
@@ -78,15 +85,17 @@ class BurgerBuilder extends React.Component {
     }
     return (
       <Aux>
-        <div>
-          <Burger ingredents={this.state.ingredent} />
-        </div>
+        <Modal show={this.state.purchasing}>
+          <OrderSummary ingredients={this.state.ingredent} />
+        </Modal>
+        <Burger ingredents={this.state.ingredent} />
         <BuildControls
           ingredentAdded={this.addIngredentHandler}
           ingredentRemove={this.removeIngredentHandler}
           disabled={disabledInfo}
           price={this.state.totPrice}
           purchaseable={this.state.purchaseable}
+          odered={this.purchaseHandler}
         />
       </Aux>
     );
